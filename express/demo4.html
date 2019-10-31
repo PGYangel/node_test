@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>get请求</title>
+</head>
+<body>
+<form action="http://yerong.dev.q1op.com/process_get" method="GET">
+    <p>get方法</p>
+    Name1: <input type="text" name="name1">  <br>
+
+    Name2: <input type="text" name="name2">
+    <input type="submit" value="Submit">
+</form>
+
+<form action="http://yerong.dev.q1op.com/process_post" method="POST">
+    <p>post方法</p>
+    Name1: <input type="text" name="name1">  <br>
+
+    Name2: <input type="text" name="name2">
+    <input type="submit" value="Submit">
+</form>
+
+<form action="http://yerong.dev.q1op.com/file_upload" method="POST" enctype="multipart/form-data">
+    <p>文件上传</p>
+    <input type="file" name="image" size="50" />
+    <br />
+    <input type="submit" value="Submit">
+</form>
+</body>
+</html>
