@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <p>单文件：</p>
+    <form action="http://localhost:3000/upload1" method="post" enctype="multipart/form-data">
+        <input type="file" name="file1">
+        <input type="submit" value="提交">
+    </form>
+</div>
+<div>
+    <p>多文件：</p>
+    <form action="http://localhost:3000/upload2" method="post" enctype="multipart/form-data">
+        <input type="file" name="file2" multiple>
+        <input type="submit" value="提交">
+    </form>
+</div>
+
+<div>
+    <p>any上传：</p>
+    <form action="http://localhost:3000/upload3" method="post" enctype="multipart/form-data">
+        <input type="file" name="test1" multiple>
+        <input type="file" name="test2" multiple>
+        <input type="submit" value="提交">
+    </form>
+</div>
+</body>
+</html>
