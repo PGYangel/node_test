@@ -30,12 +30,46 @@
     $('#btn').click(function(){
         var formData=new FormData();//创建表单对象
         var file=$('#bigfile')[0].files[0];
+        if(!file){
+            alert('没有选择文件');
+            return false;
+        }
         formData.append("bigFile",file);
-        $.ajax({
+        var fileSize=file.size;//文件大小
+        var chunkSize=2*1024*1024;//切片大小2M
+        var chunks =Math.ceil(fileSize/chunkSize);//切割数
+        var blobSlice = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice;//切割方法
+
+        var spark=new SparkMD5.ArrayBuffer();
+        var reader=new FileReader();
+        var currentChunk=0;
+        loadNext();
+        reader.onload=function(e){
+            var result=e.target.result;
+            spark.append(result);
+            currentChunk++;
+            if (currentChunk < chunks) {
+                loadNext();
+                console.log('第'+currentChunk+'分片解析完成，开始解析'+(currentChunk + 1)+'分片');
+            } else {
+                var md5 = spark.end();
+                console.log('解析完成');
+                console.log(md5);
+                console.log(result);
+            }
+        };
+
+        function loadNext() {
+            var start = currentChunk * chunkSize;
+            var end = start + chunkSize > file.size ? file.size : (start + chunkSize);
+            reader.readAsArrayBuffer(blobSlice.call(file, start, end));
+        }
+
+        /*$.ajax({
             url:'http://localhost:3000/bigUpload',
             data:formData,
             type:'post',
-            dataType: "formData",
+            dataType: "json",
             processData: false,//用于对data参数进行序列化处理 这里必须false
             contentType: false, //必须
             success:function(result){
@@ -44,8 +78,11 @@
             error:function(){
                 console.log('报错了')
             }
-        });
+        });*/
     });
+
+
+
 
     /*$('#btn').click(function () {
         var file=$('#bigfile')[0].files[0];
