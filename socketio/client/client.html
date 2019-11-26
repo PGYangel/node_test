@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="jquery-1.11.1.min.js" type="text/javascript"></script>
+    <script src="socket.io.js" type="text/javascript"></script>
+
+</head>
+<body>
+<div>
+    <input type="text" id="txt">
+    <button id="btn">提交</button>
+</div>
+
+<ul id="list">
+
+</ul>
+
+<script type="text/javascript">
+    var socket=io('http://localhost:3000/');
+
+    // 提交信息
+    $('#btn').click(function(){
+        socket.emit('post msg', $('#txt').val());
+        $('#txt').val('');
+        return false;
+    });
+
+    // 接收广播内容
+    socket.on('spread msg',function(msg){
+        $('#list').append($('<li>').text(msg));
+    });
+
+</script>
+</body>
+</html>
