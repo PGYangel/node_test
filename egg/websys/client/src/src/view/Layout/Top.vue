@@ -1,7 +1,11 @@
 <template>
   <div class="wrap">
     <div class="userBox">
-      <el-link type="primary">退出</el-link>
+      <el-row>
+        <el-col>
+          <router-link to="/">退出</router-link>
+        </el-col>
+      </el-row>
     </div>
   </div>
 </template>

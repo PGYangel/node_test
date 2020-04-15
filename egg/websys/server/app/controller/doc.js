@@ -19,7 +19,11 @@ class DocController extends Controller {
   // 获取文案管理项列表
   async getList() {
     const { ctx } = this;
-    const result = await ctx.service.doc.getList();
+    const form = {
+      pageSize: parseInt(ctx.query.pageSize),
+      pageIndex: parseInt(ctx.query.pageIndex),
+    };
+    const result = await ctx.service.doc.getList(form);
     ctx.body = result;
   }
 
@@ -66,7 +70,7 @@ class DocController extends Controller {
   // 删除文案管理项
   async delData() {
     const { ctx } = this;
-    const result = await ctx.service.doc.delData(ctx.request.body.id);
+    const result = await ctx.service.doc.delData(ctx.params.id);
     ctx.body = result;
   }
   // 获取文案内容

@@ -4,11 +4,12 @@ module.exports = app => {
     // websocket
   });
   app.on('error', (err, ctx) => {
-    console.log(err);
+    // console.log(err);
     // report error
   });
   app.on('request', ctx => {
-    // console.log(ctx.request);
+    // console.log('app')
+    // console.log(ctx.header.origin);
     // log receive request
   });
   app.on('response', ctx => {

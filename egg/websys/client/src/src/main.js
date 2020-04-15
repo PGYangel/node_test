@@ -8,18 +8,31 @@ import 'element-ui/lib/theme-chalk/index.css'
 import Vueaxios from 'vue-axios'
 import axios from 'axios'
 import store from '@/store'
+import {getCookie} from '@/util/cookies'
+import {checkToken} from '@/api/users'
 
 Vue.use(ElementUI)
 Vue.use(Vueaxios, axios)
 Vue.config.productionTip = false
 
 router.beforeEach(async (to, from, next) => {
+  const token = getCookie('login_token')
+  const userName = getCookie('userName')
   if (to.path !== '/') {
-    /* if (!store.getters.userInfo.state) {
+    if (token !== '' && userName !== '') {
+      checkToken({token, userName}).then(res => {
+        if (res.state) {
+          next()
+        } else {
+          next('/')
+        }
+      }).catch(ex => { next('/') })
+    } else {
       next('/')
-    } */
+    }
+  } else {
+    next()
   }
-  next()
 })
 
 /* eslint-disable no-new */

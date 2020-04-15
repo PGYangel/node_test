@@ -12,18 +12,13 @@ class UsersController extends Controller {
     };
     const result = await ctx.service.users.login(form);
     if (result.state) {
-
       const token = this.app.jwt.sign({
         data: result.userName + new Date().getTime(),
       }, this.app.config.jwt.secret);
       result.token = token;
+      await ctx.service.users.addToken({ token, userName: result.userName });
     }
-    this.addToken();
     ctx.body = result;
-  }
-  // 添加登录token
-  async addToken() {
-    console.log(1111111);
   }
   // 查找对比token
   async checkToken() {

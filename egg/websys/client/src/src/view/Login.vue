@@ -25,6 +25,7 @@
 
 <script>
 import {login} from '@/api/users'
+import {setCookie, delCookie} from '@/util/cookies'
 export default {
   name: 'login',
   data () {
@@ -43,8 +44,9 @@ export default {
       }
     }
   },
-  created () {
-
+  activated () {
+    delCookie('login_token')
+    delCookie('userName')
   },
   methods: {
     submitLogin () {
@@ -58,9 +60,10 @@ export default {
             })
             return false
           }
-          console.log(res.token)
-          // this.$store.commit('setUserInfo', res)
-          // this.$router.push('/projects')
+          setCookie('login_token', res.token, res.cookieExp)
+          setCookie('userName', res.userName, res.cookieExp)
+          this.$store.commit('setUserInfo', res)
+          this.$router.push('/projects')
         })
       })
     }

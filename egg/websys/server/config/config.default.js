@@ -37,11 +37,10 @@ module.exports = appInfo => {
     csrf: {
       enable: false,
     },
-    // 白名单
-    domainWhiteList: [
-      'http://webc.yr.dev.q1.com',
-      'http://gg.yr.dev.q1.com',
-    ],
+    domainWhiteList: [ '*' ],
+  };
+  config.cors = {
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
   };
 
   // add your middleware config here
@@ -54,6 +53,7 @@ module.exports = appInfo => {
     // 系统白名单
     sysWhiteList: [
       'http://webc.yr.dev.q1.com',
+      'http://zq-zltj.dev.q1op.com',
     ],
     // 网页白名单
     webWhiteList: [

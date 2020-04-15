@@ -1,10 +1,10 @@
 'use strict';
 
 module.exports = app => {
-  const { router, controller, config } = app;
-  const cors = app.middleware.cors(config);
+  const { router, controller } = app;
+  const sysCors = app.middleware.sysCors(app);
 
-  router.post('/users/login', cors, controller.users.login);
+  router.post('/users/login', sysCors, controller.users.login);
 
-  router.post('/users/checkToken', cors, controller.users.checkToken);
+  router.post('/users/checkToken', sysCors, controller.users.checkToken);
 };

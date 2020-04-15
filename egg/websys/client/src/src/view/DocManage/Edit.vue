@@ -56,7 +56,7 @@ export default {
     return {
       content: {},
       imgIndex: 0,
-      apiUrl: 'http://webs.yr.dev.q1.com/doc/getDetail/'
+      apiUrl: ''
     }
   },
   activated () {
@@ -66,7 +66,7 @@ export default {
     getData () {
       getDataForId(this.$route.params.id).then(res => {
         this.content = JSON.parse(JSON.stringify(res.data))
-        this.apiUrl += this.content.id
+        this.apiUrl = 'http://webs.yr.dev.q1.com/doc/getDetail/' + this.content.id
       })
     },
     modifData () {

@@ -1,10 +1,10 @@
-'use strict'
+'use strict';
 
-module.exports = app=>{
-    const {router,controller,config}=app
-    const cors = app.middleware.cors(config)
+module.exports = app => {
+  const { router, controller } = app;
+  const sysCors = app.middleware.sysCors(app);
 
-    /**
+  /**
      * @swagger
      * /projects/list:
      *   get:
@@ -17,5 +17,5 @@ module.exports = app=>{
      *       200:
      *         description: success
      */
-    router.get('/projects/list',cors,controller.projects.getList)
-}
+  router.get('/projects/list', sysCors, controller.projects.getList);
+};

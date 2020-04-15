@@ -13,6 +13,11 @@
               <el-link type="primary" :href="scope.row.url" target="_blank">{{scope.row.url}}</el-link>
             </template>
           </el-table-column>
+          <el-table-column label="API">
+            <template slot-scope="scope">
+              <el-link type="primary" :href="'http://webs.yr.dev.q1.com/doc/getDetail/'+scope.row.id" target="_blank">{{'http://webs.yr.dev.q1.com/doc/getDetail/'+scope.row.id}}</el-link>
+            </template>
+          </el-table-column>
           <el-table-column label="操作" width="180" align="center">
             <template slot-scope="scope">
               <el-button size="mini" type="primary" @click="gotoEdit(scope.row.id)">编辑</el-button>
@@ -28,6 +33,7 @@
             </template>
           </el-table-column>
         </el-table>
+        <pagination :pagination="queryData" @pageChange="pageChange"></pagination>
       </el-card>
       <el-dialog title="新增文案管理项" :visible.sync="addDialog">
         <Add @flush="flushList"></Add>
@@ -37,25 +43,33 @@
 
 <script>
 import Add from '@/view/DocManage/Add'
+import Pagination from '@/components/Pagination'
 import {getList, delDoc} from '@/api/doc'
 export default {
   name: 'doc-list',
   components: {
-    Add
+    Add,
+    Pagination
   },
   data () {
     return {
+      queryData: {
+        pageSize: 10,
+        pageIndex: 1,
+        total: 0
+      },
       addDialog: false,
       list: []
     }
   },
-  created () {
+  activated () {
     this.getList()
   },
   methods: {
     getList () {
-      getList().then(res => {
+      getList(this.queryData).then(res => {
         this.list = res.data
+        this.queryData.total = res.total
       })
     },
     flushList () {
@@ -72,6 +86,10 @@ export default {
           type: 'success'
         })
       })
+    },
+    pageChange (val) {
+      this.queryData = val
+      this.getList()
     }
   }
 }

@@ -6,6 +6,10 @@ module.exports = {
   // static: {
   //   enable: true,
   // }
+  cors: {
+    enable: true,
+    package: 'egg-cors',
+  },
   mysql: {
     enable: true,
     package: 'egg-mysql',
@@ -14,4 +18,5 @@ module.exports = {
     enable: true,
     package: 'egg-jwt',
   },
+
 };

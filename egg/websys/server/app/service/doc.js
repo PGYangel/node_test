@@ -28,7 +28,14 @@ class DocService extends Service {
     const result = {};
     try {
       const d = await this.app.mysql.select('doc_list', {
-        where: { isEnabled: 1 },
+        where: {
+          isEnabled: 1,
+        },
+        limit: form.pageSize,
+        offset: (form.pageIndex - 1) * form.pageSize,
+      });
+      const total = await this.app.mysql.count('doc_list', {
+        isEnabled: 1,
       });
       result.data = d.map(val => {
         const data = {
@@ -41,9 +48,11 @@ class DocService extends Service {
         };
         return data;
       });
+      result.total = total;
       result.state = 1;
       result.msg = '读取成功';
     } catch (e) {
+      console.log(e);
       result.data = [];
       result.state = 0;
       result.msg = '读取失败';
@@ -122,7 +131,7 @@ class DocService extends Service {
   // 获取文案内容
   async getDetailForId() {
     const { ctx } = this;
-    const result = { msg: '成功' };
+    const result = {};
     try {
       const d = await this.app.mysql.select('doc_list', {
         where: {

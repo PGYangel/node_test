@@ -1,9 +1,9 @@
 'use strict';
 
 module.exports = app => {
-  const { router, controller, config } = app;
+  const { router, controller } = app;
   // 设置路由跨域
-  const cors = app.middleware.cors(config, 1);
+  const sysCors = app.middleware.sysCors(app);
   /**
      * @swagger
      * /:
@@ -17,6 +17,6 @@ module.exports = app => {
      *       200:
      *         description: success
      */
-  router.get('/', cors, controller.home.index);
-  router.get('/swagger.json', controller.home.swagger);
+  router.get('/', sysCors, controller.home.index);
+  router.get('/swagger.json', sysCors, controller.home.swagger);
 };

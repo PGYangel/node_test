@@ -8,3 +8,11 @@ export function login (data) {
     data: data
   })
 }
+
+export function checkToken (data) {
+  return request({
+    url: '/users/checkToken',
+    method: 'post',
+    data: data
+  })
+}

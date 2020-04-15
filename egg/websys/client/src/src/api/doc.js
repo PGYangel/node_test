@@ -1,5 +1,5 @@
 import request from '@/util/request'
-// import qs from 'qs'
+import qs from 'qs'
 
 // 添加文案管理项
 export function addDoc (data) {
@@ -10,9 +10,10 @@ export function addDoc (data) {
   })
 }
 // 获取文案管理项列表
-export function getList () {
+export function getList (data) {
+  const query = qs.stringify(data)
   return request({
-    url: '/doc/list',
+    url: `/doc/list?${query}`,
     method: 'get'
   })
 }
@@ -44,8 +45,7 @@ export function modifData (data) {
 // 修改数据
 export function delDoc (data) {
   return request({
-    url: `/doc/delData`,
-    method: 'post',
-    data: data
+    url: `/doc/delData/${data.id}`,
+    method: 'delete'
   })
 }

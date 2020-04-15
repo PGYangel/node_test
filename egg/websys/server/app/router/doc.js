@@ -1,9 +1,9 @@
 'use strict';
 
 module.exports = app => {
-  const { router, controller, config } = app;
-  const cors = app.middleware.cors(config);
-  const cors2 = app.middleware.cors(config, 1);
+  const { router, controller } = app;
+  const sysCors = app.middleware.sysCors(app);
+  const sysCors2 = app.middleware.sysCors(app, 1);
 
   /**
      * @swagger
@@ -33,7 +33,7 @@ module.exports = app => {
      *       200:
      *         description: success
      */
-  router.post('/doc/add', cors, controller.doc.add);
+  router.post('/doc/add', sysCors, controller.doc.add);
   /**
      * @swagger
      * /doc/list:
@@ -47,7 +47,7 @@ module.exports = app => {
      *       200:
      *         description: success
      */
-  router.get('/doc/list', cors, controller.doc.getList);
+  router.get('/doc/list', sysCors, controller.doc.getList);
   /**
      * @swagger
      * /doc/getDataForId:
@@ -61,14 +61,31 @@ module.exports = app => {
      *       200:
      *         description: success
      */
-  router.get('/doc/getDataForId', cors, controller.doc.getDataForId);
+  router.get('/doc/getDataForId', sysCors, controller.doc.getDataForId);
 
-  router.post('/doc/uploadImg', cors, controller.doc.uploadImg);
+  router.post('/doc/uploadImg', sysCors, controller.doc.uploadImg);
 
-  router.post('/doc/modifData', cors, controller.doc.modifData);
+  router.post('/doc/modifData', sysCors, controller.doc.modifData);
 
-  router.post('/doc/delData', cors, controller.doc.delData);
+  /**
+     * @swagger
+     * /doc/delData/{id}:
+     *   delete:
+     *     tags:
+     *       - Doc
+     *     summary: "删除文档管理项"
+     *     produces:
+     *       - application/json
+     *     parameters:
+     *       - name: id
+     *         in: "path"
+     *         required: true
+     *     responses:
+     *       200:
+     *         description: success
+     */
+  router.delete('/doc/delData/:id', sysCors, controller.doc.delData);
 
-  router.get('/doc/getDetail/:id', cors2, controller.doc.getDetailForId);
+  router.get('/doc/getDetail/:id', sysCors2, controller.doc.getDetailForId);
 
 };
